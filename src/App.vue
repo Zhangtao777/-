@@ -1,31 +1,45 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
     <router-view/>
+      <van-tabbar v-model="active" v-show="isShow">
+        <van-tabbar-item icon="home-o" to="/">首页</van-tabbar-item>
+        <van-tabbar-item icon="apps-o" to="/about">分类</van-tabbar-item>
+        <van-tabbar-item icon="shopping-cart-o" to="/cart">购物车</van-tabbar-item>
+        <van-tabbar-item icon="manager-o" to="/me">我的</van-tabbar-item>
+      </van-tabbar>
   </div>
 </template>
 
+<script>
+import {mapState} from "vuex"
+export default {
+  data(){
+    return{
+      active:0,
+      isShow:true
+    }
+  },
+  mounted(){
+    this.$store.commit("setIs",true)
+  },
+  components:{
+    
+  },
+  computed:{
+    ...mapState(["is"])
+  },
+  watch:{
+    is(n){
+      this.isShow = n
+    }
+  }
+
+}
+</script>
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-#nav {
-  padding: 30px;
+*{
+  margin: 0;
+  padding: 0;
 }
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
 </style>
